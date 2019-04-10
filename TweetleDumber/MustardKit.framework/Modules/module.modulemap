@@ -1,0 +1,11 @@
+framework module MustardKit {
+  umbrella header "MustardKit.h"
+
+  export *
+  module * { export * }
+}
+
+module MustardKit.Swift {
+    header "MustardKit-Swift.h"
+    requires objc
+}
