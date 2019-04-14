@@ -91,8 +91,16 @@ class TweetListView: UIView {
         UIView.animate(
             withDuration: 0.3, delay: 0.0, options: [.beginFromCurrentState, .curveEaseInOut],
             animations: {
-                self.visibleConstraint.isActive = !hidden
-                self.hiddenConstraint.isActive = hidden
+                // This was made a little more verbose because the disable has to
+                // come before the enable to avoid autolayout errors in the console.
+                // Visually it doesn't matter, the console output just bugs me.
+                if hidden {
+                    self.visibleConstraint.isActive = false
+                    self.hiddenConstraint.isActive = true
+                } else {
+                    self.hiddenConstraint.isActive = false
+                    self.visibleConstraint.isActive = true
+                }
                 self.layoutIfNeeded()
             },
             completion: nil
