@@ -13,7 +13,11 @@ class AppDelegate: ServicesApplicationDelegate {
     
     override init() {
         super.init(services: [DependenciesApplicationService()])
-        
+    }
+    
+    override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let result = super.application(application, didFinishLaunchingWithOptions: launchOptions)
         self.window = RootWindow()
+        return result
     }
 }
