@@ -31,8 +31,6 @@ class SignUpViewController: UIViewController, CustomViewProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureInputFields()
-        enableKeyboardSupport()
         bindViewModel()
     }
     

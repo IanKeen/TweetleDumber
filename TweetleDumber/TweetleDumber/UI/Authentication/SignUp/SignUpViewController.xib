@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,6 +38,8 @@
             <connections>
                 <outlet property="password" destination="f5p-zg-NI9" id="bFu-oK-39Z"/>
                 <outlet property="passwordConfirmation" destination="sFp-pR-4ph" id="ASv-93-YQJ"/>
+                <outlet property="scrollView" destination="agV-q6-YiS" id="DKV-76-Kmw"/>
+                <outlet property="scrollViewBottomConstraint" destination="99a-jG-Tg5" id="elg-aT-uuR"/>
                 <outlet property="signUp" destination="uho-8g-ewA" id="lVd-qi-Weq"/>
                 <outlet property="username" destination="dpy-5j-hW7" id="XUR-hi-3cY"/>
             </connections>

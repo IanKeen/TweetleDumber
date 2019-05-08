@@ -39,7 +39,7 @@ class ImageCache {
     
     private init() { }
     
-    func getImage(from url: URL, deliverOn context: ExecutionContext, complete: @escaping (Result<UIImage>) -> Void) -> Cancellable {
+    func getImage(from url: URL, deliverOn context: ExecutionContext, complete: @escaping (Result<UIImage, Error>) -> Void) -> Cancellable {
         if let existing = cache.value[url.absoluteString] {
             context.execute { complete(.success(existing)) }
             return Cancellables.noop()

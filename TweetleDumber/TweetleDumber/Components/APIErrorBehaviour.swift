@@ -14,9 +14,9 @@ struct APIError: LocalizedError, Decodable {
 }
 
 class APIErrorBehaviour: APIBehaviour {
-    func apiClient<T: APIOperation>(_ apiClient: APIClient, operationReceived operation: T, request: HTTPRequest, response: Result<HTTPResponse>, next: @escaping (Result<HTTPResponse>) -> Void) {
-        next(response.map({ response in
-            if let error = response.data.flatMap({ try? defaultJSONDecoder.decode(APIError.self, from: $0) }) {
+    func apiClient<T: APIOperation>(_ apiClient: APIClient, operationReceived operation: T, request: HTTPRequest, response: Result<HTTPResponse, Error>, next: @escaping (Result<HTTPResponse, Error>) -> Void) {
+        next(response.throwingMap({ response in
+            if let error = response.data.flatMap({ try? APIClient.defaultJSONDecoder.decode(APIError.self, from: $0) }) {
                 throw error
             } else {
                 return response

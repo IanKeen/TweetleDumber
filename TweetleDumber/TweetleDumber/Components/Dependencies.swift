@@ -36,17 +36,17 @@ class DependenciesApplicationService: NSObject, UIApplicationDelegate {
                 mocks.mock(.any(SignUpOperation.self), delay: 1, with: { Authentication.random() })
                 mocks.mock(.any(TweetListOperation.self), delay: 1, with: { TweetListOperation.Response.random(startingWith: tempNewTweet) })
                 mocks.mock(.any(TweetRepliesOperation.self), delay: 1, with: { TweetRepliesOperation.Response.random() })
-                mocks.mock(.any(TweetOperation.self), delay: 2, with: { req -> Result<HTTPResponse> in
-                    return Result.attempt {
+                mocks.mock(.any(TweetOperation.self), delay: 2, with: { req -> Result<HTTPResponse, Error> in
+                    return Result.init {
                         switch try req.body.encode()?.source {
                         case .data(let data)?:
-                            let tweet = try defaultJSONDecoder.decode(Tweet.self, from: data)
+                            let tweet = try APIClient.defaultJSONDecoder.decode(Tweet.self, from: data)
                             let newTweet = Identified<Tweet>(
                                 identifier: .init(rawValue: UUID().uuidString),
                                 value: tweet
                             )
                             tempNewTweet = newTweet
-                            let response = try defaultJSONEncoder.encode(newTweet)
+                            let response = try APIClient.defaultJSONEncoder.encode(newTweet)
                             return HTTPResponse(code: 200, headers: [], data: response)
                             
                         default:

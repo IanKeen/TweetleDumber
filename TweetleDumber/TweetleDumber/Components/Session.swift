@@ -22,11 +22,11 @@ class Session {
     }
     
     // MARK: - Public Functions
-    func signIn(username: String, password: String, complete: @escaping (Result<Void>) -> Void) -> Cancellable {
+    func signIn(username: String, password: String, complete: @escaping (Result<Void, Error>) -> Void) -> Cancellable {
         let signIn = SignInOperation(username: username, password: password)
         return performAuth(signIn, complete: complete)
     }
-    func signUp(username: String, password: String, complete: @escaping (Result<Void>) -> Void) -> Cancellable {
+    func signUp(username: String, password: String, complete: @escaping (Result<Void, Error>) -> Void) -> Cancellable {
         let signUp = SignUpOperation(username: username, password: password)
         return performAuth(signUp, complete: complete)
     }
@@ -44,7 +44,7 @@ class Session {
     }
     
     // MARK: - Private Functions
-    private func performAuth<T: APIOperation>(_ operation: T, complete: @escaping (Result<Void>) -> Void) -> Cancellable where T.Response == Authentication {
+    private func performAuth<T: APIOperation>(_ operation: T, complete: @escaping (Result<Void, Error>) -> Void) -> Cancellable where T.Response == Authentication {
         return apiClient.perform(operation: operation) { [weak self] result in
             guard let self = self else { return }
             
@@ -64,13 +64,13 @@ class Session {
 extension Session: Bindable { }
 
 extension Bindings where Base == Session {
-    func signIn(username: String, password: String) -> Output<Result<Void>> {
+    func signIn(username: String, password: String) -> Output<Result<Void, Error>> {
         return .init { input in
             let task = self.base.signIn(username: username, password: password, complete: input.send)
             return Cancellables.create(task.cancel)
         }
     }
-    func signUp(username: String, password: String) -> Output<Result<Void>> {
+    func signUp(username: String, password: String) -> Output<Result<Void, Error>> {
         return .init { input in
             let task = self.base.signUp(username: username, password: password, complete: input.send)
             return Cancellables.create(task.cancel)
