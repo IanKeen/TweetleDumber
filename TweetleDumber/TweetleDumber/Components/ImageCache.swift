@@ -10,10 +10,10 @@ import MustardKit
 
 extension UIImageView {
     @discardableResult
-    func setImage(from url: URL, placeholder: UIImage?) -> Cancellable {
+    func setImage(from url: URL, placeholder: UIImage?, using imageCache: ImageCache = DefaultImageCache.shared) -> Cancellable {
         self.image = placeholder
         
-        return ImageCache.shared.getImage(
+        return imageCache.getImage(
             from: url,
             deliverOn: DispatchQueue.main,
             complete: { [weak self] result in
@@ -32,8 +32,12 @@ enum ImageCacheError: Error {
     case downloadError
 }
 
-class ImageCache {
-    static let shared = ImageCache()
+protocol ImageCache {
+    func getImage(from url: URL, deliverOn context: ExecutionContext, complete: @escaping (Result<UIImage, Error>) -> Void) -> Cancellable
+}
+
+class DefaultImageCache: ImageCache {
+    static let shared = DefaultImageCache()
     
     private let cache = Atomic<[String: UIImage]>([:])
     
